@@ -12,7 +12,7 @@ class InMemoryFileSystem:
     """
     Returns a list representing the path as a sequence of directory names.
     """
-    print(path)
+    # print(path)
     return path.strip("/").split("/")
 
   def run(self):
@@ -31,7 +31,9 @@ class InMemoryFileSystem:
         self.mkdir(self.current_path + path)
       elif command.startswith("cd"):
         path = command.split()[1]
-        self.cd(self.current_path + path)
+        if path not in ["`" , "/" ,".."]:
+          path = self.current_path + path
+        self.cd(path)
       elif command.startswith("grep"):
         pattern = command.split()[1].strip("'")
         path = command.split()[2]
@@ -59,7 +61,6 @@ class InMemoryFileSystem:
         self.rm(self.current_path + source)
       else:
         print("Invalid command")
-      print(self.root)
 
   def mkdir(self, path):
     """
@@ -79,6 +80,7 @@ class InMemoryFileSystem:
       self.current_dir = self.root
       return
     if path == "..":
+      print(self.current_path)
       path_array = self.current_path.strip("/").split("/")[0:-1]
       new_dir = self.root
       self.current_path = ""
@@ -105,7 +107,7 @@ class InMemoryFileSystem:
       self.cd(path)
 
     current_dir = self.current_dir
-    if not current_dir:
+    if not current_dir and len(current_dir) == 0:
       print("Directory does not exist")
     else:
       print(", ".join(current_dir.keys()))
@@ -174,7 +176,6 @@ class InMemoryFileSystem:
     """
     Searches for a pattern in a file.
     """
-    print(pattern, path, "grep")
     path_components = self._get_path(path)
     current_dir = self._get_dir("/".join(
                                  path_components[:-1]))
@@ -182,12 +183,10 @@ class InMemoryFileSystem:
       print("Directory does not exist")
       return
     filename = path.split("/")[-1]  # Extract filename from path
-    print(filename, current_dir, """s""")
     if filename not in current_dir or not isinstance(current_dir[filename],
                                                      io.StringIO):
       print("File does not exist or is not a text file")
       return
-    print(current_dir[filename].getvalue().split(), "pattern")
     if pattern in current_dir[filename].getvalue().split():
       print(f"Pattern '{pattern}' found in {path}")
     else:
