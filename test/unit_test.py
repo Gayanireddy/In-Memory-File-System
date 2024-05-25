@@ -1,13 +1,13 @@
 import unittest
 import sys
 from io import StringIO
-sys.path.append('/..') 
-from main import InMemoryFileSystem
+sys.path.append("..")
+import main
 
 class InMemoryFileSystemTest(unittest.TestCase):
 
   def setUp(self):
-    self.fs = InMemoryFileSystem()
+    self.fs = main.InMemoryFileSystem()
 
   def test_init(self):
     self.assertEqual(self.fs.current_dir, self.fs.root)
