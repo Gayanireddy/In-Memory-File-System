@@ -1,0 +1,76 @@
+## InMemoryFileSystem: A Simple File System in Memory
+
+This document provides an introduction and usage guide for the `InMemoryFileSystem` class. It allows you to interact with a virtual file system stored entirely in memory. 
+
+**Features:**
+
+* Create directories and files
+* Write and read content from files
+* List directory contents
+* Change directory (cd)
+* Move and copy files/directories (mv, cp)
+* Remove files/directories (rm)
+* Basic search within files (grep - bonus feature)
+
+**How it Works:**
+
+The file system is represented by a nested dictionary structure. The root directory is an empty dictionary, and subdirectories and files are stored as keys within their parent directory's dictionary. Files use `io.StringIO` objects to hold their content.
+
+**Getting Started:**
+
+1.  **Save the code:** Copy and paste the provided code into a Python file (e.g., `in_memory_fs.py`).
+
+2.  **Run the program:** Open a terminal, navigate to the directory where you saved the file, and execute the script using `python in_memory_fs.py`.
+
+**Using the File System:**
+
+The program starts with an infinite loop, prompting you for commands. The current directory path is displayed before each prompt (`> `). Type a command and press Enter to execute it.
+
+**Available Commands:**
+
+* **exit:** Terminate the program.
+* **ls [path]:** List the contents of a directory. If no path is provided, lists the contents of the current directory.
+* **mkdir path:** Create a new directory.
+* **cd path:** Change the current directory.
+* **touch path:** Create a new empty file.
+* **echo content path:** Write content to a file.
+* **cat path:** Display the contents of a file.
+* **grep pattern path:** Search for a pattern within a file (bonus feature).
+* **mv source destination:** Move a file or directory to another location.
+* **cp source destination:** Copy a file or directory to another location.
+* **rm path:** Remove a file or directory (prompts for confirmation).
+
+**Path format:**
+
+* Paths use forward slashes (`/`) as separators.
+* You can navigate to the root directory using `cd /` or `cd ~`.
+* Move up one directory level using `cd ..`.
+
+**Example Usage:**
+
+```
+> mkdir documents
+> cd documents
+> touch my_file.txt
+> echo "Hello, world!" my_file.txt
+> cat my_file.txt
+Hello, world!
+> cd ..
+> ls
+documents
+> rm documents (Y/N)?
+Y
+> ls
+```
+
+**Bonus Feature: grep**
+
+The `grep` command allows you to search for a pattern within a file. It outputs whether the pattern was found or not.
+
+**Note:**
+
+* This is a simplified file system for demonstration purposes.
+* It uses in-memory storage, meaning data is lost when the program terminates.
+
+
+I hope this documentation helps you understand and use the `InMemoryFileSystem` class!
